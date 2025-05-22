@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Commit Downloader</title>
+  <script>
+    function downloadZip() {
+      const repoUrl = document.getElementById("repo").value.trim();
+      const sha = document.getElementById("sha").value.trim();
+
+      try {
+        const [_, user, repo] = new URL(repoUrl).pathname.split("/");
+        const downloadUrl = `http://github.com/${user}/${repo}/archive/${sha}.zip`;
+        window.location.href = downloadUrl;
+      } catch {
+        alert("Invalid GitHub URL");
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+  <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-xl">
+    <h1 class="text-3xl font-bold text-center text-blue-700 mb-2">GitHub Commit ZIP Downloader</h1>
+    <p class="text-center text-gray-600 mb-6">
+      Enter a GitHub repository link and a commit SHA to download that commit as a ZIP file.
+    </p>
+    <div class="space-y-4">
+      <div>
+        <label for="repo" class="block text-sm font-semibold text-gray-700 mb-1">GitHub Repository URL</label>
+        <input
+          id="repo"
+          type="text"
+          placeholder="https://github.com/username/repo"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+        />
+      </div>
+      <div>
+        <label for="sha" class="block text-sm font-semibold text-gray-700 mb-1">Commit SHA</label>
+        <input
+          id="sha"
+          type="text"
+          placeholder="e.g., 1a2b3c4d..."
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+        />
+      </div>
+      <button
+        onclick="downloadZip()"
+        class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition">
+        Download .zip
+      </button>
+    </div>
+  </div>
+</body>
+</html>
